@@ -1,8 +1,9 @@
 var async = require('async');
 var prop = require('./Prop.js');
-var Database = require('./Database.js');
-var Table = require('./Table.js');
-var Column = require('./Column.js');
+var esdb = require('easy_db');
+var Database = esdb.Database;
+var Table = esdb.Table;
+var Column = esdb.Column;
 var log = require('../util/McpLog.js');
 
 var DbCenter = function(){
@@ -54,7 +55,7 @@ DbCenter.prototype.check = function(cb)
 DbCenter.prototype._initMg = function(cb)
 {
     var self = this;
-    var db = new Database(0);
+    var db = new Database(prop.dbs[0]);
 
     //add tables
     var uniqueIdTable = new Table(db, "uniqueId", [
@@ -107,7 +108,7 @@ DbCenter.prototype._checkMain = function(cb)
 DbCenter.prototype._initMain = function(cb)
 {
     var self = this;
-    var db = new Database(1);
+    var db = new Database(prop.dbs[1]);
 
     //add tables
     var area = new Table(db, "area", [

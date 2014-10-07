@@ -1,4 +1,3 @@
-var db = require('../config/Database.js');
 var digestUtil = require("../util/DigestUtil.js");
 var adminPageControl = require("./AdminPageControl.js");
 var testPageControl = require("./TestPageControl.js");
