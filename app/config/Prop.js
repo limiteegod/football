@@ -1,3 +1,4 @@
+var esdb = require('easy_db');
 var target = 'dev';
 
 var argv = process.argv;
@@ -30,15 +31,10 @@ exports.userType = {"CUSTOMER":0, "ADMIN":1};
 exports.userTypeArray = [{id:0, code:'CUSTOMER', des:"普通用户"},
     {id:1, code:'ADMIN', des:"系统管理员"}];
 
-exports.dbType = {"mysql":0, "oracle":1, "mongodb":2};
-exports.dbTypeArray = [{id:0, code:'mysql', des:"mysql"},
-    {id:1, code:'oracle', des:"oracle"},
-    {id:2, code:'mongodb', des:"mongodb"}];
-
 //config db basic type
 var dbs = [{
     config:{'url':'mongodb://127.0.0.1:27017/football'},
-    type:exports.dbType.mongodb
+    type:esdb.prop.dbType.mongodb
 },{
     config:{
         'host':'localhost',
@@ -47,7 +43,7 @@ var dbs = [{
         'port':3306,
         'database':'football'
     },
-    type:exports.dbType.mysql
+    type:esdb.prop.dbType.mysql
 }];
 exports.dbs = dbs;
 

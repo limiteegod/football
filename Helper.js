@@ -1,7 +1,8 @@
 var async = require('async');
+var esut = require('easy_util');
 var dc = require('./app/config/DbCenter.js');
 var prop = require('./app/config/Prop.js');
-var log = require('./app/util/McpLog.js');
+var log = esut.log;
 
 var Helper = function(){};
 

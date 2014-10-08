@@ -1,8 +1,10 @@
+var esut = require('easy_util');
+
 var prop = require("../config/Prop.js");
 var dc = require("../config/DbCenter.js");
 var ec = require("../config/ErrCode.js");
-var digestUtil = require("../util/DigestUtil.js");
-var log = require("../util/McpLog.js");
+var digestUtil = esut.digestUtil;
+var log = esut.log;
 
 var DigestService = function(){};
 

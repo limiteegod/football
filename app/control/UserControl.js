@@ -1,10 +1,10 @@
 var async = require('async');
-var log = require('../util/McpLog.js');
-var digestUtil = require("../util/DigestUtil.js");
+var esut = require('easy_util');
+var log = esut.log;
+var digestUtil = esut.digestUtil;
 var dc = require('../config/DbCenter.js');
 var ec = require('../config/ErrCode.js');
 var prop = require('../config/Prop.js');
-var uniqueIdService = require('../service/UniqueIdService.js');
 var digestService = require('../service/DigestService.js');
 
 var UserControl = function(){

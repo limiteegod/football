@@ -1,10 +1,11 @@
 var async = require('async');
 var prop = require('./Prop.js');
 var esdb = require('easy_db');
+var esut = require('easy_util');
 var Database = esdb.Database;
 var Table = esdb.Table;
 var Column = esdb.Column;
-var log = require('../util/McpLog.js');
+var log = esut.log;
 
 var DbCenter = function(){
     var self = this;
@@ -13,6 +14,7 @@ var DbCenter = function(){
 DbCenter.prototype.init = function(cb)
 {
     var self = this;
+    esdb.log.setShowLog(true);
     async.waterfall([
         //the mysql
         function(cb){
@@ -68,6 +70,7 @@ DbCenter.prototype._initMg = function(cb)
         new Column(db, "lastActiveTime", "bigint", -1, false, undefined)
     ]);
     db.put(stInfoTable);
+
     self.mg = db;
     self.mg.init(cb);
 };

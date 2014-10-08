@@ -1,7 +1,8 @@
+var esut = require('easy_util');
 var dc = require('../config/DbCenter.js');
 var prop = require('../config/Prop.js');
-var digestUtil = require("../util/DigestUtil.js");
-var log = require("../util/McpLog.js");
+var digestUtil = esut.digestUtil;
+var log = esut.log;
 
 var AdminPageControl = function(){};
 

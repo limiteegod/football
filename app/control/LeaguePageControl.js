@@ -1,8 +1,9 @@
+var esut = require('easy_util');
 var dc = require('../config/DbCenter.js');
 var prop = require('../config/Prop.js');
-var digestUtil = require("../util/DigestUtil.js");
-var log = require("../util/McpLog.js");
-var pageUtil = require("../util/PageUtil.js");
+var digestUtil = esut.digestUtil;
+var log = esut.log;
+var pageUtil = esut.pageUtil;
 var async = require('async');
 
 var LeaguePageControl = function(){};

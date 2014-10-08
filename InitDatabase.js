@@ -1,7 +1,7 @@
-var log = require('./app/util/McpLog.js');
+var esut = require('easy_util');
+var log = esut.log;
 var dc = require('./app/config/DbCenter.js');
 var async = require('async');
-var digestUtil = require('./app/util/DigestUtil.js');
 var prop = require('./app/config/Prop.js');
 
 async.waterfall([

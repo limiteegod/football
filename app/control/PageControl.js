@@ -1,4 +1,5 @@
-var digestUtil = require("../util/DigestUtil.js");
+var esut = require('easy_util');
+var digestUtil = esut.digestUtil;
 var adminPageControl = require("./AdminPageControl.js");
 var testPageControl = require("./TestPageControl.js");
 var leaguePageControl = require("./LeaguePageControl.js");

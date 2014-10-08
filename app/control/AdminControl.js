@@ -1,10 +1,11 @@
 var async = require('async');
-var log = require('../util/McpLog.js');
-var digestUtil = require("../util/DigestUtil.js");
+var esut = require('easy_util');
+var log = esut.log;
+var digestUtil = esut.digestUtil;
+var pageUtil = esut.pageUtil;
 var dc = require('../config/DbCenter.js');
 var ec = require('../config/ErrCode.js');
 var prop = require('../config/Prop.js');
-var pageUtil = require("../util/PageUtil.js");
 var digestService = require('../service/DigestService.js');
 
 var AdminControl = function(){
@@ -143,7 +144,7 @@ AdminControl.prototype.handleAD02 = function(user, headNode, bodyNode, cb)
 {
     var backBodyNode = {};
     var areaTable = dc.main.get("area");
-    areaTable.save(bodyNode.league, [], function(err, data){
+    areaTable.save(bodyNode.area, [], function(err, data){
         if(err)
         {
             cb(ec.E9999);
