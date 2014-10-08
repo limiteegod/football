@@ -31,9 +31,11 @@ Helper.prototype.addOperation = function()
         {
             var operationTable = dc.main.get("operation");
             operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_POPEDOM', name:'权限管理', url:'', hasChildren:1}, [], function(err, data){
-                operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_ADD_OPERATION', parent:'ADMIN_POPEDOM', name:'新增菜单', url:''}, [], function(err, data){
+                operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_ADD_OPERATION', parent:'ADMIN_POPEDOM', name:'新增菜单', url:'admin_addOperation.html'}, [], function(err, data){
                 });
-                operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_USER_OPERATION', parent:'ADMIN_POPEDOM', name:'用户权限', url:'', hasChildren:0}, [], function(err, data){
+                operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_USER_OPERATION', parent:'ADMIN_POPEDOM', name:'用户权限', url:'admin_setOperation.html', hasChildren:0}, [], function(err, data){
+                });
+                operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_LIST_OPERATION', parent:'ADMIN_POPEDOM', name:'权限列表', url:'admin_listOperation.html', hasChildren:0}, [], function(err, data){
                 });
             });
             operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_AREA', name:'地区管理', url:'', hasChildren:1}, [], function(err, data){

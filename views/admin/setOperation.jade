@@ -3,16 +3,31 @@ html(lang="en")
     head
         include ../includes/script.jade
         script(type='text/javascript').
+            var stepWin;
+            var checkSuccess = function(data){
+                stepWin.checkSuccess(data);
+            };
             KISSY.use("io,node,json,vs-data-select,vs-round-input,vs-step", function(S, Io, Node, Json, VsDataSelect, VsRoundInput, VsStep){
-                var step = new VsStep("#myWindow", {title:"权限设置",
+                var frameId = Node.one("#frameId");
+                stepWin = new VsStep("#myWindow", {title:"权限设置",
                     sureEvent:function(data){
 
                     },
+                    frameId:frameId.val()
+                    ,
                     pages:[
                         'admin_selectUserType.html',
                         'admin_selectOperation.html'
                     ]
                 });
+
+                var vButton = Node.one("#vButton");
+                vButton.on("click", function(e){
+                    console.log("here-------------------------------------------------------");
+                });
             });
     body
-        #myWindow(class="container", style="width:640px;height:520px;")
+        input(id="vButton", type="hidden", value="")
+        input(id="frameId", type="hidden", value=frameId)
+        .bodyAdminDiv
+            #myWindow(class="container", style="width:640px;height:620px;")

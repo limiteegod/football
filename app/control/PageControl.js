@@ -11,7 +11,11 @@ PageControl.prototype.handle = function(headNode, bodyNode, cb)
     console.log(bodyNode);
     var self = this;
     var cmd = headNode.cmd;
-    self[cmd[0]](headNode, bodyNode, cb);
+    self[cmd[0]](headNode, bodyNode, function(err, backBodyNode){
+        backBodyNode.frameId = bodyNode.frameId;
+        backBodyNode.parentFrameId = bodyNode.parentFrameId;
+        cb(err, backBodyNode);
+    });
 };
 
 

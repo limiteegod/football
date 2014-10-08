@@ -5,33 +5,40 @@ html(lang="en")
         script(type='text/javascript').
             KISSY.use("io,node,json,vs-list", function(S, Io, Node, Json, VsList){
                 var selectedId = Node.one("#selectedId").val();
-                console.log('selectedId:');
-                console.log(selectedId);
                 var list = new VsList("#userTypeList", {selectedId:selectedId});
-
                 var backValueNode = Node.one("#backValue");
+                var checkParam = function(data)
+                {
+                    return true;
+                };
+
                 var getData = function()
                 {
                     var data = list.getSelectedData();
-                    if(!data)
-                    {
-                        data = {};
-                    }
-                    console.log("user type data:");
-                    console.log(data);
-                    var encodedBody = CurSite.encrypt({digestType:"3des-empty"}, null, Json.stringify(data)).body;
-                    return encodedBody;
+                    return data;
                 };
+
                 backValueNode.on("click", function(e) {
-                    console.log("generate data.......");
-                    backValueNode.val(getData());
+                    var data = getData();
+                    if(!checkParam(data))
+                    {
+                        parent.checkSuccess(null);
+                    }
+                    else
+                    {
+                        parent.checkSuccess({userType:data});
+                    }
                 });
+
                 backValueNode.val(getData());  //init default value of backValue element
             });
     body
-        input(id="backValue", type="hidden", value="")
-        input(id="selectedId", type="hidden", value=selectedId)
-        #userTypeList(class="container", style="width:180px;height:700px;")
-            ol
-                - each val in rst
-                    li(value=val._id)= val.name
+        .bodyAdminDiv
+            input(id="backValue", type="hidden", value="")
+            input(id="selectedId", type="hidden", value=selectedId)
+            input(id="frameId", type="hidden", value=frameId)
+            input(id="parentFrameId", type="hidden", value=parentFrameId)
+            #userTypeList(class="container", style="width:180px;height:700px;")
+                ol
+                    - each val in rst
+                        li(value=val.id)= val.des

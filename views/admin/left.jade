@@ -2,7 +2,6 @@ doctype html
 html(lang="en")
     head
         include ../includes/script.jade
-        link(rel='stylesheet', type='text/css', href='./js/tree/assets/dpl-min.css')
         script(type='text/javascript').
             KISSY.use("io,node,json,vs-data-tree", function(S, Io, Node, Json, VsDataTree){
                 var getChildren = function(id, cb)
@@ -37,4 +36,4 @@ html(lang="en")
             });
     body
         .bodyAdminDiv
-            #ppList.container(style="margin-left:10px;")
+            #ppList.container(style="margin-left:10px;margin-top:10px;")

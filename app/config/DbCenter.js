@@ -141,6 +141,7 @@ DbCenter.prototype._initMain = function(cb)
         new Column(db, "name", "varchar", 20, false, undefined),
         new Column(db, "parent", "varchar", 40, false, ''),
         new Column(db, "url", "varchar", 80, false, undefined),
+        new Column(db, "status", "int", 11, false, 1),
         new Column(db, "version", "int", 11, false, 0)
     ]);
     db.put(operation);

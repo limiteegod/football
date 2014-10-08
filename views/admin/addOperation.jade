@@ -5,23 +5,28 @@ html(lang="en")
         script(type='text/javascript').
             //
     body
-        #myWindow.container
-        table
-            tr
-                td 名称*
-                td
-                    #name.container
-            tr
-                td 父级*
-                td
-                    #dataSelect
-            tr
-                td url*
-                td
-                    #url.container
-            tr
-                td 类型*
-                td
-                    select(id="type" name="type")
-                        option(value="") a
-        input(id="submit", value="提交", type="button")
+        .bodyAdminDiv
+            .clearfix(style="margin-top:8px")
+                .vs_grid_plain(style="width:100px;text-align:right;margin-top:4px") 代码*:
+                .vs_grid_plain(style="margin-left:8px;")
+                    input(id="code", type="text")
+            .clearfix(style="margin-top:8px")
+                .vs_grid_plain(style="width:100px;text-align:right;margin-top:4px") 名称*:
+                .vs_grid_plain(style="margin-left:8px;")
+                    input(id="name", type="text")
+            .clearfix(style="margin-top:8px")
+                .vs_grid_plain(style="width:100px;text-align:right;margin-top:4px") 父级*:
+                .vs_grid_plain(style="margin-left:8px;")
+                    input(id="parent", type="text")
+            .clearfix(style="margin-top:8px")
+                .vs_grid_plain(style="width:100px;text-align:right;margin-top:4px") 角色*:
+                .vs_grid_plain(style="margin-left:8px;")
+                    input(id="userType", type="text")
+            .clearfix(style="margin-top:8px")
+                .vs_grid_plain(style="width:100px;text-align:right;margin-top:4px") url*:
+                .vs_grid_plain(style="margin-left:8px;")
+                    input(id="url", type="text")
+            .clearfix(style="margin-top:8px")
+                .vs_grid_plain(style="width:100px;text-align:right;") &nbsp;
+                .vs_grid_plain(style="margin-left:8px;")
+                    input(type="button", value="添加", id="add")

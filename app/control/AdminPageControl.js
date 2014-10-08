@@ -1,4 +1,5 @@
 var esut = require('easy_util');
+var pageUtil = esut.pageUtil;
 var dc = require('../config/DbCenter.js');
 var prop = require('../config/Prop.js');
 var digestUtil = esut.digestUtil;
@@ -37,11 +38,12 @@ AdminPageControl.prototype.showUserType = function(headNode, bodyNode, cb)
 AdminPageControl.prototype.selectOperation = function(headNode, bodyNode, cb)
 {
     var self = this;
-    var backBodyNode = {title:"select operation"};
-    var operationTable = db.get("operation");
+    var backBodyNode = {title:"选择权限"};
+    var operationTable = dc.main.get("operation");
+    var stepInfo = JSON.parse(digestUtil.check({digestType:'3des-empty'}, null, bodyNode.data));
+    backBodyNode.userType = prop.userTypeArray[stepInfo[0].userType.id];
     operationTable.find({}, {name:1, url:1, parentId:1}).toArray(function(err,data){
         backBodyNode.rst = data;
-        backBodyNode.data = JSON.parse(digestUtil.check({digestType:'3des-empty'}, digestUtil.getEmptyKey(), bodyNode.data));
         cb(null, backBodyNode);
     });
 };
@@ -49,21 +51,21 @@ AdminPageControl.prototype.selectOperation = function(headNode, bodyNode, cb)
 AdminPageControl.prototype.selectUserType = function(headNode, bodyNode, cb)
 {
     var self = this;
-    var backBodyNode = {title:"select user type"};
-    var userTypeTable = db.get("userType");
-    userTypeTable.find({}, {name:1}).toArray(function(err,data){
-        backBodyNode.rst = data;
-        var fromData = JSON.parse(digestUtil.check({digestType:'3des-empty'}, digestUtil.getEmptyKey(), bodyNode.data));
+    var backBodyNode = {title:"选择用户类型"};
+    backBodyNode.rst = prop.userTypeArray;
+    if(bodyNode.data)
+    {
+        var fromData = JSON.parse(digestUtil.check({digestType:'3des-empty'}, null, bodyNode.data));
         if(fromData[0])
         {
-            backBodyNode.selectedId = fromData[0]._id;
+            backBodyNode.selectedId = fromData[0].userType.id;
         }
-        else
-        {
-            backBodyNode.selectedId = backBodyNode.rst[0]._id;
-        }
-        cb(null, backBodyNode);
-    });
+    }
+    if(!backBodyNode.selectedId)
+    {
+        backBodyNode.selectedId = backBodyNode.rst[0].id;
+    }
+    cb(null, backBodyNode);
 };
 
 AdminPageControl.prototype.showOperation = function(headNode, bodyNode, cb)
@@ -97,46 +99,39 @@ AdminPageControl.prototype.addArea = function(headNode, bodyNode, cb)
 AdminPageControl.prototype.listArea = function(headNode, bodyNode, cb)
 {
     var self = this;
-    var skip = bodyNode.skip;
-    if(skip == undefined)
-    {
-        skip = 0;
-    }
-    else
-    {
-        skip = parseInt(skip);
-    }
-    var limit = bodyNode.limit;
-    if(limit == undefined)
-    {
-        limit = 20;
-    }
-    else
-    {
-        limit = parseInt(limit);
-    }
-    var sort = bodyNode.sort;
-    if(sort == undefined)
-    {
-        sort = {id:1};
-    }
-    else
-    {
-        sort = JSON.parse(sort);
-    }
-    var cond = bodyNode.cond;
-    if(cond == undefined)
-    {
-        cond = {};
-    }
-    else
-    {
-        cond = JSON.parse(cond);
-    }
-    var backBodyNode = {title:"view areas", skip:skip, limit:limit};
+
+    var backBodyNode = {title:"view areas"};
+    pageUtil.parse(bodyNode, backBodyNode);
     var areaTable = dc.main.get("area");
-    var cursor = areaTable.find(cond, {}, []).sort(sort).limit(skip, limit);
+    var cursor = areaTable.find(backBodyNode.cond, {}).sort(backBodyNode.sort).limit(backBodyNode.skip, backBodyNode.limit);
     cursor.toArray(function(err, data){
+        backBodyNode.rst = data;
+        backBodyNode.count = cursor.count(function(err, count){
+            backBodyNode.count = count;
+            cb(null, backBodyNode);
+        });
+    });
+};
+
+/**
+ * 权限列表
+ * @param headNode
+ * @param bodyNode
+ * @param cb
+ */
+AdminPageControl.prototype.listOperation = function(headNode, bodyNode, cb)
+{
+    var self = this;
+    var backBodyNode = {title:"view areas"};
+    pageUtil.parse(bodyNode, backBodyNode);
+    var operationTable = dc.main.get("operation");
+    var cursor = operationTable.find(backBodyNode.cond, {}).sort(backBodyNode.sort).limit(backBodyNode.skip, backBodyNode.limit);
+    cursor.toArray(function(err, data){
+        for(var key in data)
+        {
+            var set = data[key];
+            set.userType = prop.userTypeArray[set.userType];
+        }
         backBodyNode.rst = data;
         backBodyNode.count = cursor.count(function(err, count){
             backBodyNode.count = count;

@@ -2,46 +2,66 @@ html(lang="en")
     head
         include ../includes/script.jade
         script(type='text/javascript').
-            KISSY.use("io,node,json,vs-list,vs-panel", function(S, Io, Node, Json, VsList, VsPanel){
-                var panel = new VsPanel("#userTypePanel");
-                var list = new VsList("#userTypeList", {});
-
-                var tPanel = new VsPanel("#tUserTypePanel");
-                var tList = new VsList("#tUserTypeList", {});
-
+            KISSY.use("io,node,json,vs-data-tree", function(S, Io, Node, Json, VsDataTree){
                 var backValueNode = Node.one("#backValue");
+
+                var getChildren = function(id, cb)
+                {
+                    var bodyNode = {cond:{parent:id}};
+                    CurSite.sendDigest(Io, Json, "AD01", null, bodyNode, function(err, backBodyNode){
+                        cb(err, backBodyNode.rst);
+                    });
+                };
+
+                var selectionChange = function(src, target)
+                {
+
+                };
+
+                var bodyNode = {cond:{parent:''}};
+                CurSite.sendDigest(Io, Json, "AD01", null, bodyNode, function(err, backBodyNode){
+                    if(backBodyNode.repCode == '0000')
+                    {
+                        var tree = new VsDataTree("#opTree", {data:backBodyNode.rst, getChildren:getChildren,
+                        selectionChange:selectionChange
+                        });
+                    }
+                    else
+                    {
+                        alert(backBodyNode.description);
+                    }
+                });
+
+                var checkParam = function(data)
+                {
+                    return true;
+                };
+
                 var getData = function()
                 {
                     var data = {};
-                    var encodedBody = CurSite.encrypt({digestType:"3des-empty"}, null, Json.stringify(data)).body;
-                    return encodedBody;
+                    return data;
                 };
+
                 backValueNode.on("click", function(e) {
-                    backValueNode.val(getData());
+                    var data = getData();
+                    if(!checkParam(data))
+                    {
+                        parent.checkSuccess(null);
+                    }
+                    else
+                    {
+                        parent.checkSuccess({operations:data});
+                    }
                 });
+
                 backValueNode.val(getData());  //init default value of backValue element
             });
     body
-        div=data[0]._id + '(' + data[0].name + ')'
         input(id="backValue", type="hidden", value="")
-        #userTypePanel(class="container", title="availabe operations", style="width:180px;height:400px;")
-            #userTypeList(class="container", style="width:180px;height:700px;")
-                ol
-                    - each val in rst
-                        li(value=val._id)= val.name
-        #operation(class="container", title="", style="width:80px;height:400px;float:left;")
-            div.clearfix
-                div(style="width:80px;height:180px;")
-            div.clearfix
-                input(type='button', style='width:40px;margin-left:20px', value='>>')
-            div.clearfix
-                input(type='button', style='width:40px;margin-left:20px', value='<<')
-            div.clearfix
-                input(type='button', style='width:40px;margin-left:20px', value='>')
-            div.clearfix
-                input(type='button', style='width:40px;margin-left:20px', value='<')
-        #tUserTypePanel(class="container", title="target operations", style="width:180px;height:400px;")
-            #tUserTypeList(class="container", style="width:180px;height:700px;")
-                ol
-                    - each val in rst
-                        li(value=val._id)= val.name
+        .bodyAdminDiv
+            .clearfix(style="border-bottom:1px solid #28afae;")='角色:' + userType.code + '(' + userType.des + ')'
+            .clearfix(style="border-bottom:1px solid #28afae;margin-top:20px;")
+                |请选择权限:
+            .clearfix(style="margin-top:6px;")
+                #opTree.container(style="margin-left:10px;")

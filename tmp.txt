@@ -1,0 +1,22 @@
+.clearfix(style="margin-top:6px;")
+                #userTypePanel(class="container", title="availabe operations", style="width:180px;height:400px;")
+                    #userTypeList(class="container", style="width:180px;height:700px;")
+                        ol
+                            - each val in rst
+                                li(value=val._id)= val.name
+                #operation(class="container", title="", style="width:80px;height:400px;float:left;")
+                    .clearfix
+                        div(style="width:80px;height:180px;")
+                    .clearfix
+                        input(type='button', style='width:40px;margin-left:20px', value='>>')
+                    .clearfix
+                        input(type='button', style='width:40px;margin-left:20px', value='<<')
+                    .clearfix
+                        input(type='button', style='width:40px;margin-left:20px', value='>')
+                    .clearfix
+                        input(type='button', style='width:40px;margin-left:20px', value='<')
+                #tUserTypePanel(class="container", title="target operations", style="width:180px;height:400px;")
+                    #tUserTypeList(class="container", style="width:180px;height:700px;")
+                        ol
+                            - each val in rst
+                                li(value=val._id)= val.name
