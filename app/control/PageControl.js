@@ -3,6 +3,9 @@ var digestUtil = esut.digestUtil;
 var adminPageControl = require("./AdminPageControl.js");
 var testPageControl = require("./TestPageControl.js");
 var leaguePageControl = require("./LeaguePageControl.js");
+var seasonPageControl = require("./SeasonPageControl.js");
+var teamPageControl = require("./TeamPageControl.js");
+
 
 var PageControl = function(){};
 
@@ -32,6 +35,16 @@ PageControl.prototype.test = function(headNode, bodyNode, cb)
 PageControl.prototype.league = function(headNode, bodyNode, cb)
 {
     leaguePageControl.handle(headNode, bodyNode, cb);
+};
+
+PageControl.prototype.season = function(headNode, bodyNode, cb)
+{
+    seasonPageControl.handle(headNode, bodyNode, cb);
+};
+
+PageControl.prototype.team = function(headNode, bodyNode, cb)
+{
+    teamPageControl.handle(headNode, bodyNode, cb);
 };
 
 var pageControl = new PageControl();

@@ -10,11 +10,15 @@ var digestService = require('../service/DigestService.js');
 
 var AdminControl = function(){
     var self = this;
-    self.cmd = {'AD01':0, 'AD02':1, 'AD03':2, 'AD04':3};
+    self.cmd = {'AD01':0, 'AD02':1, 'AD03':2, 'AD04':3, 'AD05':4, 'AD06':5,
+    'AD07':6};
     self.cmdArray = [{id:0, code:'AD01', fromType:prop.digestFromType.CACHE, des:"权限查询"},
         {id:1, code:'AD02', fromType:prop.digestFromType.CACHE, des:'添加地域'},
         {id:2, code:'AD03', fromType:prop.digestFromType.CACHE, des:'添加联赛'},
-        {id:3, code:'AD04', fromType:prop.digestFromType.CACHE, des:'修改联赛'}];
+        {id:3, code:'AD04', fromType:prop.digestFromType.CACHE, des:'修改联赛'},
+        {id:4, code:'AD05', fromType:prop.digestFromType.CACHE, des:'删除赛季'},
+        {id:5, code:'AD06', fromType:prop.digestFromType.CACHE, des:'添加赛季'},
+        {id:6, code:'AD07', fromType:prop.digestFromType.CACHE, des:'添加球队'}];
 };
 
 AdminControl.prototype.handle = function(headNode, bodyStr, userCb)
@@ -108,6 +112,22 @@ AdminControl.prototype.checkAD04 = function(user, headNode, bodyNode, cb)
     cb(null);
 };
 
+AdminControl.prototype.checkAD05 = function(user, headNode, bodyNode, cb)
+{
+    cb(null);
+};
+
+AdminControl.prototype.checkAD06 = function(user, headNode, bodyNode, cb)
+{
+    cb(null);
+};
+
+AdminControl.prototype.checkAD07 = function(user, headNode, bodyNode, cb)
+{
+    cb(null);
+};
+
+
 /**
  * find one's all operations
  * @param user
@@ -191,6 +211,53 @@ AdminControl.prototype.handleAD04 = function(user, headNode, bodyNode, cb)
     var leagueTable = dc.main.get("league");
     leagueTable.update(bodyNode.cond, bodyNode.data, [], function(err, data){
         cb(null, backBodyNode);
+    });
+};
+
+/**
+ * @param user
+ * @param headNode
+ * @param bodyNode
+ * @param cb
+ */
+AdminControl.prototype.handleAD05 = function(user, headNode, bodyNode, cb)
+{
+    var backBodyNode = {};
+    var seasonTable = dc.main.get("season");
+    seasonTable.remove({id:bodyNode.id}, [], function(err, data){
+        cb(err, backBodyNode);
+    });
+};
+
+/**
+ * 添加赛季
+ * @param user
+ * @param headNode
+ * @param bodyNode
+ * @param cb
+ */
+AdminControl.prototype.handleAD06 = function(user, headNode, bodyNode, cb)
+{
+    var backBodyNode = {};
+    var seasonTable = dc.main.get("season");
+    seasonTable.save(bodyNode.season, [], function(err, data){
+        cb(err, backBodyNode);
+    });
+};
+
+/**
+ * 添加球队
+ * @param user
+ * @param headNode
+ * @param bodyNode
+ * @param cb
+ */
+AdminControl.prototype.handleAD07 = function(user, headNode, bodyNode, cb)
+{
+    var backBodyNode = {};
+    var teamTable = dc.main.get("team");
+    teamTable.save(bodyNode.team, [], function(err, data){
+        cb(err, backBodyNode);
     });
 };
 

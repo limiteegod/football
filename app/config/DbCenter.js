@@ -134,6 +134,19 @@ DbCenter.prototype._initMain = function(cb)
         new Column(db, "version", "int", 11, false, 0)
     ]);
     db.put(user);
+    var season = new Table(db, "season", [
+        new Column(db, "id", "varchar", 80, false, undefined, true, false),
+        new Column(db, "version", "int", 11, false, 0)
+    ]);
+    db.put(season);
+    var team = new Table(db, "team", [
+        new Column(db, "id", "varchar", 80, false, undefined, true, false),
+        new Column(db, "name", "varchar", 20, false, undefined),
+        new Column(db, "areaId", "varchar", 80, false, undefined),
+        new Column(db, "des", "varchar", 400, false, ''),
+        new Column(db, "version", "int", 11, false, 0)
+    ]);
+    db.put(team);
     var operation = new Table(db, "operation", [
         new Column(db, "id", "varchar", 40, false, undefined),
         new Column(db, "userType", "int", 11, false, undefined),

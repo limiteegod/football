@@ -49,6 +49,10 @@ Helper.prototype.addOperation = function()
                 });
                 operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_LIST_LEAGUE', parent:'ADMIN_LEAGUE', name:'联赛列表', url:'league_list.html', hasChildren:0}, [], function(err, data){
                 });
+                operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_LIST_SEASON', parent:'ADMIN_LEAGUE', name:'赛季列表', url:'season_list.html', hasChildren:0}, [], function(err, data){
+                });
+                operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_LIST_TEAM', parent:'ADMIN_LEAGUE', name:'球队列表', url:'team_list.html', hasChildren:0}, [], function(err, data){
+                });
             });
             operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_GAME', name:'游戏管理', url:'', hasChildren:1}, [], function(err, data){
                 operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_LIST_GAME', parent:'ADMIN_GAME', name:'游戏列表', url:'game_list.html', hasChildren:0}, [], function(err, data){
@@ -80,6 +84,73 @@ Helper.prototype.league = function()
         {
             var leagueTable = dc.main.get("league");
             leagueTable.create(function(err, data){
+                cb(err);
+            });
+        }
+    ], function (err, result) {
+        log.info(err);
+        log.info("end...........");
+    });
+};
+
+Helper.prototype.season = function()
+{
+    var self = this;
+    async.waterfall([
+        function(cb){
+            dc.init(function(err){
+                cb(err);
+            });
+        },
+        function(cb){
+            var seasonTable = dc.main.get("season");
+            seasonTable.drop(function(err, data){
+                cb(null);
+            });
+        },
+        function(cb)
+        {
+            var seasonTable = dc.main.get("season");
+            seasonTable.create(function(err, data){
+                cb(err);
+            });
+        },
+        function(cb)
+        {
+            var seasonTable = dc.main.get("season");
+            for(var i = 1997; i < 2015; i++)
+            {
+                seasonTable.save({id:i}, [], function(err, data){
+
+                });
+            }
+            cb(null);
+        }
+    ], function (err, result) {
+        log.info(err);
+        log.info("end...........");
+    });
+};
+
+Helper.prototype.team = function()
+{
+    var self = this;
+    async.waterfall([
+        function(cb){
+            dc.init(function(err){
+                cb(err);
+            });
+        },
+        function(cb){
+            var teamTable = dc.main.get("team");
+            teamTable.drop(function(err, data){
+                cb(null);
+            });
+        },
+        function(cb)
+        {
+            var teamTable = dc.main.get("team");
+            teamTable.create(function(err, data){
                 cb(err);
             });
         }
