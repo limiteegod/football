@@ -33,9 +33,16 @@ TeamPageControl.prototype.detail = function(headNode, bodyNode, cb)
     var backBodyNode = {title:"detail team info"};
     async.waterfall([
         function(cb){
+            var areaTable = dc.main.get("area");
+            areaTable.find({}, {}).toArray(function(err, data){
+                backBodyNode.rst = data;
+                cb(err);
+            });
+        },
+        function(cb){
             var teamTable = dc.main.get("team");
             teamTable.findOne({id:bodyNode.id}, {}, [], function(err, data){
-                backBodyNode.season = data;
+                backBodyNode.team = data;
                 cb(err);
             });
         }
@@ -49,6 +56,23 @@ TeamPageControl.prototype.list = function(headNode, bodyNode, cb)
     var self = this;
     var backBodyNode = {title:"view leagues"};
     pageUtil.parse(bodyNode, backBodyNode);
+    var teamTable = dc.main.get("team");
+    var cursor = teamTable.find(backBodyNode.cond, {}, []).sort(backBodyNode.sort).limit(backBodyNode.skip, backBodyNode.limit);
+    cursor.toArray(function(err, data){
+        backBodyNode.rst = data;
+        backBodyNode.count = cursor.count(function(err, count){
+            backBodyNode.count = count;
+            cb(null, backBodyNode);
+        });
+    });
+};
+
+TeamPageControl.prototype.select = function(headNode, bodyNode, cb)
+{
+    var self = this;
+    var backBodyNode = {title:"选择球队"};
+    pageUtil.parse(bodyNode, backBodyNode);
+    backBodyNode.select = bodyNode.select;
     var teamTable = dc.main.get("team");
     var cursor = teamTable.find(backBodyNode.cond, {}, []).sort(backBodyNode.sort).limit(backBodyNode.skip, backBodyNode.limit);
     cursor.toArray(function(err, data){

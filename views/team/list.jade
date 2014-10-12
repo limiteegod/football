@@ -34,7 +34,7 @@ html(lang="en")
                     item.on("click", function(){
                         var tId = Node.one(this).attr("tId");
                         var url = "team_detail.html?id=" + tId;
-                        var win = new VsWindow("#tWin", {title:"球队详情", width:500, height:400, url:url, controlBt:[
+                        var win = new VsWindow("#tWin", {title:"球队详情", width:600, height:480, url:url, controlBt:[
                             {name:'关闭', cb:function(err, data){
                                 return true;
                             }}
@@ -67,14 +67,14 @@ html(lang="en")
                     input(type="button", id="add", value="新增")
                     input(type="button", id="refresh", value="刷新")
             .clearfix(style="margin-top:8px")
-                #teams.container(style="width:752px;")
+                #teams.container
                     table
                         thead
                             tr
-                                td(style="width:200px;") 编码
-                                td(style="width:200px;") 名称
-                                td(style="width:200px;") 所属区域
-                                td(style="width:134px;") 操作
+                                td(w="200") 编码
+                                td(w="200") 名称
+                                td(w="200") 所属区域
+                                td(w="134") 操作
                         tbody
                             - each val in rst
                                 tr

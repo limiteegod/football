@@ -51,11 +51,15 @@ Helper.prototype.addOperation = function()
                 });
                 operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_LIST_SEASON', parent:'ADMIN_LEAGUE', name:'赛季列表', url:'season_list.html', hasChildren:0}, [], function(err, data){
                 });
+                operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_LIST_STAGE', parent:'ADMIN_LEAGUE', name:'阶段列表', url:'stage_list.html', hasChildren:0}, [], function(err, data){
+                });
                 operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_LIST_TEAM', parent:'ADMIN_LEAGUE', name:'球队列表', url:'team_list.html', hasChildren:0}, [], function(err, data){
                 });
             });
             operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_GAME', name:'游戏管理', url:'', hasChildren:1}, [], function(err, data){
                 operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_LIST_GAME', parent:'ADMIN_GAME', name:'游戏列表', url:'game_list.html', hasChildren:0}, [], function(err, data){
+                });
+                operationTable.save({userType:prop.userType.ADMIN, id:'ADMIN_LIST_TERM', parent:'ADMIN_GAME', name:'期次列表', url:'term_list.html', hasChildren:0}, [], function(err, data){
                 });
             });
             cb(null, "success");
@@ -160,5 +164,61 @@ Helper.prototype.team = function()
     });
 };
 
+Helper.prototype.stage = function()
+{
+    var self = this;
+    async.waterfall([
+        function(cb){
+            dc.init(function(err){
+                cb(err);
+            });
+        },
+        function(cb){
+            var table = dc.main.get("stage");
+            table.drop(function(err, data){
+                cb(null);
+            });
+        },
+        function(cb)
+        {
+            var table = dc.main.get("stage");
+            table.create(function(err, data){
+                cb(err);
+            });
+        }
+    ], function (err, result) {
+        log.info(err);
+        log.info("end...........");
+    });
+};
+
+Helper.prototype.term = function()
+{
+    var self = this;
+    async.waterfall([
+        function(cb){
+            dc.init(function(err){
+                cb(err);
+            });
+        },
+        function(cb){
+            var table = dc.main.get("term");
+            table.drop(function(err, data){
+                cb(null);
+            });
+        },
+        function(cb)
+        {
+            var table = dc.main.get("term");
+            table.create(function(err, data){
+                cb(err);
+            });
+        }
+    ], function (err, result) {
+        log.info(err);
+        log.info("end...........");
+    });
+};
+
 var h = new Helper();
-h.addOperation();
+h.term();

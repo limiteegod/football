@@ -11,14 +11,24 @@ var digestService = require('../service/DigestService.js');
 var AdminControl = function(){
     var self = this;
     self.cmd = {'AD01':0, 'AD02':1, 'AD03':2, 'AD04':3, 'AD05':4, 'AD06':5,
-    'AD07':6};
+    'AD07':6, 'AD08':7, 'AD09':8, 'AD10':9, 'AD11':10, 'AD12':11, 'AD13':12,
+    'AD14':13, 'AD15':14, 'AD16':15};
     self.cmdArray = [{id:0, code:'AD01', fromType:prop.digestFromType.CACHE, des:"权限查询"},
         {id:1, code:'AD02', fromType:prop.digestFromType.CACHE, des:'添加地域'},
         {id:2, code:'AD03', fromType:prop.digestFromType.CACHE, des:'添加联赛'},
         {id:3, code:'AD04', fromType:prop.digestFromType.CACHE, des:'修改联赛'},
         {id:4, code:'AD05', fromType:prop.digestFromType.CACHE, des:'删除赛季'},
         {id:5, code:'AD06', fromType:prop.digestFromType.CACHE, des:'添加赛季'},
-        {id:6, code:'AD07', fromType:prop.digestFromType.CACHE, des:'添加球队'}];
+        {id:6, code:'AD07', fromType:prop.digestFromType.CACHE, des:'添加球队'},
+        {id:7, code:'AD08', fromType:prop.digestFromType.CACHE, des:'删除联赛'},
+        {id:8, code:'AD09', fromType:prop.digestFromType.CACHE, des:'修改球队'},
+        {id:9, code:'AD10', fromType:prop.digestFromType.CACHE, des:'删除球队'},
+        {id:10, code:'AD11', fromType:prop.digestFromType.CACHE, des:'添加阶段'},
+        {id:11, code:'AD12', fromType:prop.digestFromType.CACHE, des:'修改阶段'},
+        {id:12, code:'AD13', fromType:prop.digestFromType.CACHE, des:'删除阶段'},
+        {id:13, code:'AD14', fromType:prop.digestFromType.CACHE, des:'添加期次'},
+        {id:14, code:'AD15', fromType:prop.digestFromType.CACHE, des:'修改期次'},
+        {id:15, code:'AD16', fromType:prop.digestFromType.CACHE, des:'删除期次'}];
 };
 
 AdminControl.prototype.handle = function(headNode, bodyStr, userCb)
@@ -123,6 +133,51 @@ AdminControl.prototype.checkAD06 = function(user, headNode, bodyNode, cb)
 };
 
 AdminControl.prototype.checkAD07 = function(user, headNode, bodyNode, cb)
+{
+    cb(null);
+};
+
+AdminControl.prototype.checkAD08 = function(user, headNode, bodyNode, cb)
+{
+    cb(null);
+};
+
+AdminControl.prototype.checkAD09 = function(user, headNode, bodyNode, cb)
+{
+    cb(null);
+};
+
+AdminControl.prototype.checkAD10 = function(user, headNode, bodyNode, cb)
+{
+    cb(null);
+};
+
+AdminControl.prototype.checkAD11 = function(user, headNode, bodyNode, cb)
+{
+    cb(null);
+};
+
+AdminControl.prototype.checkAD12 = function(user, headNode, bodyNode, cb)
+{
+    cb(null);
+};
+
+AdminControl.prototype.checkAD13 = function(user, headNode, bodyNode, cb)
+{
+    cb(null);
+};
+
+AdminControl.prototype.checkAD14 = function(user, headNode, bodyNode, cb)
+{
+    cb(null);
+};
+
+AdminControl.prototype.checkAD15 = function(user, headNode, bodyNode, cb)
+{
+    cb(null);
+};
+
+AdminControl.prototype.checkAD16 = function(user, headNode, bodyNode, cb)
 {
     cb(null);
 };
@@ -257,6 +312,159 @@ AdminControl.prototype.handleAD07 = function(user, headNode, bodyNode, cb)
     var backBodyNode = {};
     var teamTable = dc.main.get("team");
     teamTable.save(bodyNode.team, [], function(err, data){
+        cb(err, backBodyNode);
+    });
+};
+
+/**
+ * 删除联赛
+ * @param user
+ * @param headNode
+ * @param bodyNode
+ * @param cb
+ */
+AdminControl.prototype.handleAD08 = function(user, headNode, bodyNode, cb)
+{
+    var backBodyNode = {};
+    var table = dc.main.get("league");
+    var cond = {id:bodyNode.id};
+    table.remove(cond, [], function(err, data){
+        cb(err, backBodyNode);
+    });
+};
+
+/**
+ * 修改球队
+ * @param user
+ * @param headNode
+ * @param bodyNode
+ * @param cb
+ */
+AdminControl.prototype.handleAD09 = function(user, headNode, bodyNode, cb)
+{
+    var backBodyNode = {};
+    var table = dc.main.get("team");
+    table.update(bodyNode.cond, bodyNode.data, [], function(err, data){
+        cb(null, backBodyNode);
+    });
+};
+
+/**
+ * 删除球队
+ * @param user
+ * @param headNode
+ * @param bodyNode
+ * @param cb
+ */
+AdminControl.prototype.handleAD10 = function(user, headNode, bodyNode, cb)
+{
+    var backBodyNode = {};
+    var table = dc.main.get("team");
+    table.remove({id:bodyNode.id}, [], function(err, data){
+        cb(err, backBodyNode);
+    });
+};
+
+/**
+ * 添加阶段
+ * @param user
+ * @param headNode
+ * @param bodyNode
+ * @param cb
+ */
+AdminControl.prototype.handleAD11 = function(user, headNode, bodyNode, cb)
+{
+    var backBodyNode = {};
+    var table = dc.main.get("stage");
+    var stage = bodyNode.stage;
+    stage.id = stage.leagueId + "_" + stage.seasonId + "_" + stage.code;
+    table.save(stage, [], function(err, data){
+        cb(err, backBodyNode);
+    });
+};
+
+/**
+ * 修改阶段
+ * @param user
+ * @param headNode
+ * @param bodyNode
+ * @param cb
+ */
+AdminControl.prototype.handleAD12 = function(user, headNode, bodyNode, cb)
+{
+    var backBodyNode = {};
+    var table = dc.main.get("stage");
+    var data = bodyNode.data.$set;
+    data.id = data.leagueId + "_" + data.seasonId + "_" + data.code;
+    table.update(bodyNode.cond, bodyNode.data, [], function(err, data){
+        cb(null, backBodyNode);
+    });
+};
+
+/**
+ * 删除阶段
+ * @param user
+ * @param headNode
+ * @param bodyNode
+ * @param cb
+ */
+AdminControl.prototype.handleAD13 = function(user, headNode, bodyNode, cb)
+{
+    var backBodyNode = {};
+    var table = dc.main.get("stage");
+    table.remove({id:bodyNode.id}, [], function(err, data){
+        cb(err, backBodyNode);
+    });
+};
+
+/**
+ * 添加期次
+ * @param user
+ * @param headNode
+ * @param bodyNode
+ * @param cb
+ */
+AdminControl.prototype.handleAD14 = function(user, headNode, bodyNode, cb)
+{
+    var backBodyNode = {};
+    var table = dc.main.get("term");
+    var term = bodyNode.term;
+    term.id = term.gameCode + "_" + term.code;
+    table.save(term, [], function(err, data){
+        cb(err, backBodyNode);
+    });
+};
+
+/**
+ * 修改阶段
+ * @param user
+ * @param headNode
+ * @param bodyNode
+ * @param cb
+ */
+AdminControl.prototype.handleAD15 = function(user, headNode, bodyNode, cb)
+{
+    var backBodyNode = {};
+    var table = dc.main.get("stage");
+    var data = bodyNode.data.$set;
+    data.id = data.leagueId + "_" + data.seasonId + "_" + data.code;
+    table.update(bodyNode.cond, bodyNode.data, [], function(err, data){
+        cb(null, backBodyNode);
+    });
+};
+
+/**
+ * 删除阶段
+ * @param user
+ * @param headNode
+ * @param bodyNode
+ * @param cb
+ */
+AdminControl.prototype.handleAD16 = function(user, headNode, bodyNode, cb)
+{
+    var backBodyNode = {};
+    var table = dc.main.get("stage");
+    table.remove({id:bodyNode.id}, [], function(err, data){
         cb(err, backBodyNode);
     });
 };

@@ -5,7 +5,8 @@ var testPageControl = require("./TestPageControl.js");
 var leaguePageControl = require("./LeaguePageControl.js");
 var seasonPageControl = require("./SeasonPageControl.js");
 var teamPageControl = require("./TeamPageControl.js");
-
+var termPageControl = require("./TermPageControl.js");
+var stagePageControl = require("./StagePageControl.js");
 
 var PageControl = function(){};
 
@@ -45,6 +46,16 @@ PageControl.prototype.season = function(headNode, bodyNode, cb)
 PageControl.prototype.team = function(headNode, bodyNode, cb)
 {
     teamPageControl.handle(headNode, bodyNode, cb);
+};
+
+PageControl.prototype.term = function(headNode, bodyNode, cb)
+{
+    termPageControl.handle(headNode, bodyNode, cb);
+};
+
+PageControl.prototype.stage = function(headNode, bodyNode, cb)
+{
+    stagePageControl.handle(headNode, bodyNode, cb);
 };
 
 var pageControl = new PageControl();

@@ -127,6 +127,15 @@ DbCenter.prototype._initMain = function(cb)
         new Column(db, "version", "int", 11, false, 0)
     ]);
     db.put(league);
+    var stage = new Table(db, "stage", [
+        new Column(db, "id", "varchar", 80, false, undefined, true, false),
+        new Column(db, "code", "int", 11, false, undefined),
+        new Column(db, "name", "varchar", 20, false, undefined),
+        new Column(db, "leagueId", "varchar", 80, false, undefined),
+        new Column(db, "seasonId", "varchar", 80, false, undefined),
+        new Column(db, "version", "int", 11, false, 0)
+    ]);
+    db.put(stage);
     var user = new Table(db, "user", [
         new Column(db, "id", "varchar", 80, false, undefined, true, false),
         new Column(db, "password", "varchar", 80, false, undefined),
@@ -147,6 +156,22 @@ DbCenter.prototype._initMain = function(cb)
         new Column(db, "version", "int", 11, false, 0)
     ]);
     db.put(team);
+    var term = new Table(db, "term", [
+        new Column(db, "id", "varchar", 80, false, undefined, true, false),
+        new Column(db, "gameCode", "varchar", 20, false, undefined),
+        new Column(db, "code", "varchar", 40, false, undefined),
+        new Column(db, "nextCode", "varchar", 40, false, undefined),
+        new Column(db, "hostTeamId", "varchar", 80, false, undefined),
+        new Column(db, "guestTeamId", "varchar", 80, false, undefined),
+        new Column(db, "stageId", "varchar", 80, false, undefined),
+        new Column(db, "concede", "int", 11, false, 0),
+        new Column(db, "openTime", "date", -1, false, undefined),
+        new Column(db, "closeTime", "date", -1, false, undefined),
+        new Column(db, "matchTime", "date", -1, false, undefined),
+        new Column(db, "status", "int", 11, false, -1),
+        new Column(db, "version", "int", 11, false, 0)
+    ]);
+    db.put(term);
     var operation = new Table(db, "operation", [
         new Column(db, "id", "varchar", 40, false, undefined),
         new Column(db, "userType", "int", 11, false, undefined),
