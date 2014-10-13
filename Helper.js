@@ -221,4 +221,4 @@ Helper.prototype.term = function()
 };
 
 var h = new Helper();
-h.term();
+h.addOperation();
