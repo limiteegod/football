@@ -23,3 +23,17 @@ console.log(stringUtil.getIntArray("123,456,321"));
 var check = feo.check();
 check.setDrawNum("1,2,3,4");
 console.log(check.getDrawNum());
+
+console.log(feo.getIntSize());
+
+console.log(feo.getCharLen("1,2,3,4"));
+
+console.log(feo.getCharLen("1,2"));
+
+console.log(feo.getCharLen("4,2,3,4"));
+
+console.log(feo.getCharLen("4,2,2,4"));
+
+console.log(feo.getNumType("4,2,2,4"));
+
+console.log(feo.getNumType("1,2,3,4"));
