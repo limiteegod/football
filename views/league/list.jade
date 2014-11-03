@@ -43,6 +43,10 @@ html(lang="en")
                 Node.one("#refresh").on("click", function(){
                     toPage(cur);
                 });
+
+                Node.one("#add").on("click", function(){
+                    CurSite.redirectTo(null, "league_add.html?");
+                });
             });
     body
         .bodyAdminDiv
@@ -51,7 +55,8 @@ html(lang="en")
             input(type='hidden', id="limit", value=limit)
             #tWin.container
             .clearfix(style="margin-top:8px")
-                .vs_grid_plain(style="width:823px;text-align:right;")
+                .vs_grid_plain(style="width:823px;text-align:left;")
+                    input(type="button", id="add", value="新增")
                     input(type="button", id="refresh", value="刷新")
             .clearfix(style="margin-top:8px")
                 #areas.container(style="width:823px;")

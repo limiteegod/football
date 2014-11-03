@@ -2,14 +2,21 @@ var express = require('express'), app = express();
 var http = require('http');
 var async = require('async');
 var httpServer = http.createServer(app);
+
 var esut = require('easy_util');
-var prop = require('./app/config/Prop.js');
-var errCode = require('./app/config/ErrCode.js');
 var digestUtil = esut.digestUtil;
 var log = esut.log;
-var cmdFactory = require("./app/control/CmdFactory.js");
-var dc = require('./app/config/DbCenter.js');
-var pageControl = require("./app/control/PageControl.js");
+
+var config = require('config');
+var prop = config.prop;
+var errCode = config.ec;
+
+var dao = require('dao');
+var dc = dao.dc;
+
+var factory = require('factory');
+var cmdFactory = factory.cmdFac;
+var pageControl = factory.pageFac;
 
 var Gateway = function(){
     var self = this;

@@ -3,29 +3,13 @@ html(lang="en")
     head
         include ../includes/script.jade
         script(type='text/javascript').
-            KISSY.use("io,node,json,vs-grid-table,vs-pagebar,vs-round-input,vs-window,vs-data-select",
-                function(S, Io, Node, Json, VsGridTable, VsPagebar, VsRoundInput, VsWindow, VsDataSelect){
-
-                var sLeague = new VsDataSelect("#sLeague", {width:200, click:function(self){
-                    var data = self.getData();
-                    var select = CurSite.encryptUrl(data, Json);
-                    var url = "league_select.html?time=" + new Date().getTime() + "&select=" + select;
-                    var win = new VsWindow("#tWin", {title:"选择联赛", width:600, height:480, url:url, controlBt:[
-                        {name:'选择', check:true, cb:function(err, data){
-                            if(data[0])
-                            {
-                                self.setData(data[0]);
-                            }
-                            return true;
-                        }}
-                    ]});
-                }});
-
+            KISSY.use("io,node,json,vs-grid-table,vs-pagebar,vs-round-input,vs-window",
+                function(S, Io, Node, Json, VsGridTable, VsPagebar, VsRoundInput, VsWindow){
                 var count = parseInt(Node.one('#count').val());
                 var skip = parseInt(Node.one('#skip').val());
                 var limit = parseInt(Node.one('#limit').val());
                 var cur = parseInt(skip/limit) + 1;
-                var table = new VsGridTable('#stages', {});
+                var table = new VsGridTable('#rst', {});
                 var pageBar = new VsPagebar('#bar', {count:count, limit:limit, cur:cur, toPage:function(index){
                     toPage(index);
                 }});
@@ -69,12 +53,8 @@ html(lang="en")
                 });
 
                 Node.one("#add").on("click", function(){
-                    var url = "stage_add.html?time=" + new Date().getTime();
-                    var win = new VsWindow("#tWin", {title:"添加阶段", width:500, height:400, url:url, controlBt:[
-                        {name:'关闭', cb:function(err, data){
-                            return true;
-                        }}
-                    ]});
+                    var url = "match_add.html?time=" + new Date().getTime();
+                    CurSite.redirectTo(null, url);
                 });
             });
     body
@@ -84,30 +64,28 @@ html(lang="en")
             input(type='hidden', id="limit", value=limit)
             #tWin.container
             .clearfix(style="margin-top:8px")
-                .vs_grid_plain(style="width:60px;text-align:right;margin-top:8px") 联赛:
-                .vs_grid_plain(style="margin-left:2px;")
-                    #sLeague.container
-            .clearfix(style="margin-top:8px")
                 .vs_grid_plain(style="width:670px;text-align:right;")
                     input(type="button", id="add", value="新增")
                     input(type="button", id="refresh", value="刷新")
             .clearfix(style="margin-top:8px")
-                #stages.container(style="width:670px;")
+                #rst.container
                     table
                         thead
                             tr
-                                td(w="120") 联赛
-                                td(w="100") 赛季
-                                td(w="100") 编码
-                                td(w="200") 名称
+                                td(w="60") id
+                                td(w="100") 主队
+                                td(w="100") 客队
+                                td(w="60") 让球
+                                td(w="180") 比赛时间
                                 td(w="134") 操作
                         tbody
                             - each val in rst
                                 tr
-                                    td=val.leagueId
-                                    td=val.seasonId
-                                    td=val.code
-                                    td=val.name
+                                    td=val.id
+                                    td=val.hostTeamId
+                                    td=val.guestTeamId
+                                    td=val.concede/100
+                                    td=val.matchTime
                                     td
                                         input(type="button", value="详情", class="detail", tId=val.id)
             .clearfix(style="margin-top:8px")
