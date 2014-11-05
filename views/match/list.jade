@@ -64,7 +64,7 @@ html(lang="en")
             input(type='hidden', id="limit", value=limit)
             #tWin.container
             .clearfix(style="margin-top:8px")
-                .vs_grid_plain(style="width:670px;text-align:right;")
+                .vs_grid_plain(style="width:670px;")
                     input(type="button", id="add", value="新增")
                     input(type="button", id="refresh", value="刷新")
             .clearfix(style="margin-top:8px")
@@ -76,7 +76,13 @@ html(lang="en")
                                 td(w="100") 主队
                                 td(w="100") 客队
                                 td(w="60") 让球
+                                td(w="180") 阶段
+                                td(w="60") 分组
                                 td(w="180") 比赛时间
+                                td(w="80") 主队半场
+                                td(w="80") 客队半场
+                                td(w="80") 主队全场
+                                td(w="80") 客队全场
                                 td(w="134") 操作
                         tbody
                             - each val in rst
@@ -85,7 +91,13 @@ html(lang="en")
                                     td=val.hostTeamId
                                     td=val.guestTeamId
                                     td=val.concede/100
+                                    td=val.stageId
+                                    td=val.groupId
                                     td=val.matchTime
+                                    td=val.hostHalfScore
+                                    td=val.guestHalfScore
+                                    td=val.hostEndScore
+                                    td=val.guestEndScore
                                     td
                                         input(type="button", value="详情", class="detail", tId=val.id)
             .clearfix(style="margin-top:8px")

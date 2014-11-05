@@ -71,6 +71,7 @@ html(lang="en")
                     data.guestTeamId = guestTeam.getData()[0].id;
                     data.stageId = stage.getData()[0].id;
                     data.concede = parseInt(Node.one("#concede").val());
+                    data.groupId = Node.one("#groupId").val()
                     data.matchTime = Node.one("#matchTime").val();
                     return data;
                 };
@@ -114,6 +115,10 @@ html(lang="en")
                 .vs_grid_plain(style="width:100px;text-align:right;margin-top:4px") (主)让球:
                 .vs_grid_plain(style="margin-left:8px;")
                     input(id="concede", type="text", value='0')
+            .clearfix(style="margin-top:8px")
+                .vs_grid_plain(style="width:100px;text-align:right;margin-top:4px") 分组:
+                .vs_grid_plain(style="margin-left:8px;")
+                    input(id="groupId", type="text", value='')
             .clearfix(style="margin-top:8px")
                 .vs_grid_plain(style="width:100px;text-align:right;margin-top:4px") 比赛时间:
                 .vs_grid_plain(style="margin-left:8px;")
